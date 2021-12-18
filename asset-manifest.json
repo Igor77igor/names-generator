@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/http//Igor77igor.github.io/names-generator/static/css/main.9e0f77ce.css",
+    "main.js": "/http//Igor77igor.github.io/names-generator/static/js/main.2ca1590e.js",
+    "static/js/787.4530d191.chunk.js": "/http//Igor77igor.github.io/names-generator/static/js/787.4530d191.chunk.js",
+    "index.html": "/http//Igor77igor.github.io/names-generator/index.html",
+    "main.9e0f77ce.css.map": "/http//Igor77igor.github.io/names-generator/static/css/main.9e0f77ce.css.map",
+    "main.2ca1590e.js.map": "/http//Igor77igor.github.io/names-generator/static/js/main.2ca1590e.js.map",
+    "787.4530d191.chunk.js.map": "/http//Igor77igor.github.io/names-generator/static/js/787.4530d191.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9e0f77ce.css",
+    "static/js/main.2ca1590e.js"
+  ]
+}
