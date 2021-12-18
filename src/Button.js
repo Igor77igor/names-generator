@@ -1,4 +1,4 @@
-const Button = ({ handleClick}) => {
+const Button = ({ handleClick, isLoading}) => {
 
 
     return (<div className="button">
