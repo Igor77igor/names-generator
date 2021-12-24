@@ -17,12 +17,38 @@ function App() {
 
   const [justNamesList, setJustNamesList] = useState([]);
 
+
+  const putNameToUserlist=(nameForList)=>
+    {
+      setUserlist([...userlist, nameForList]);
+    }
+
+
+  const putNameToNameslist=(justNameForList)=>
+    {
+      setJustNamesList([...justNamesList, justNameForList.toUpperCase()]);
+    }
+
+
+  const searchDoubleName=()=>
+    {
+      console.log("ime vec postoji");
+      const doubleMessage = "IME VEC POSTOJI, UNIJETI NOVO IME";
+      setDoubleName(doubleMessage);
+    }
+
+  const emptyField=()=>
+    {
+    console.log('prazno polje');
+      const message = "UNESENO JE PRAZNO POLJE";
+      setEmptyValue(message);
+    }
+    
   
   const handleClick = () => {
-    console.log("botun kliknut");
-  
+    console.log("botun kliknut");  
 
-  fetch('https://randomuser.me/api')
+    fetch('https://randomuser.me/api')
       .then(res => {
         return res.json();
       })
@@ -35,22 +61,19 @@ function App() {
           let mojeIme = ime.name.first.toUpperCase();
           console.log('first name je:', mojeIme);
 
-          setJustNamesList([...justNamesList, mojeIme.toUpperCase()]);
-
+          putNameToNameslist(mojeIme); 
+          
           let id1 = ime.cell;
           console.log('id je:', id1);
 
 
-          if (justNamesList.includes(mojeIme.toUpperCase())) {
-
-            const doubleMessage = "IME VEC POSTOJI, UNIJETI NOVO IME";
-            setDoubleName(doubleMessage);
-
-            console.log('IME POSTOJI VEC');
-
+          if (justNamesList.includes(mojeIme.toUpperCase())) 
+          {
+          searchDoubleName();  
           }
 
-          else {
+          else 
+          {
 
             let person =
             {
@@ -59,7 +82,7 @@ function App() {
               value: mojeIme.toUpperCase()
             };
 
-            setUserlist([...userlist, person]);
+            putNameToUserlist(person); 
 
           }
 
@@ -71,69 +94,54 @@ function App() {
   }
 
 
-  const handleChange = (e) => {
+  const handleChange = (e) => 
+  {
     console.log('utipkano'); 
     setInputName(e.target.value);   
     setDoubleName('');
     setEmptyValue('');
   };
 
-  const handleSubmit = (e) => {
-    console.log('UIPKANO NESTO')
+  const handleSubmit = (e) => 
+  {
     e.preventDefault();
 
-    if (inputName) {
-      console.log("input name postoji");
+    if (inputName) 
+      {
+        console.log("input name postoji");
+        
+        if (justNamesList.includes(inputName.toUpperCase())) 
+          {
+          searchDoubleName();          
+          }
 
-      // userlist.forEach(user => {
-      //   if (inputName === user.value)
-      //   {
-      //     console.log('UNEŠENO JE ISTO IME')
-      //   const doubleMessage = "IME VEC POSTOJI, UNIJETI NOVO IME";
-      //   setDoubleName(doubleMessage);
-      // }
+          else
+          {
+            console.log('e target value od handlesubmita je:', inputName);
 
-      if (justNamesList.includes(inputName.toUpperCase())) {
-        console.log("ime vec postoji");
+            let person2 =
+              {
+              id: (Math.floor(Math.random() * 1000)).toString(),
+              value: inputName.toUpperCase()
+              };
 
-        const doubleMessage = "IME VEC POSTOJI, UNIJETI NOVO IME";
-        setDoubleName(doubleMessage);
+            putNameToNameslist(inputName); 
+            putNameToUserlist(person2);             
+          }
 
-        console.log('Double name je sada:', doubleMessage);
-      }
-
-      else {
-        console.log('e target value od handlesubmita je:', inputName);
-
-        let person2 =
-        {
-          id: (Math.floor(Math.random() * 1000)).toString(),
-
-          value: inputName.toUpperCase()
-        };
-
-        setUserlist([...userlist, person2]);
-        setJustNamesList([...justNamesList, inputName.toUpperCase()]);
+          setInputName('');
 
       }
 
-      setInputName('');
-
-    }
-
-    else {
-      console.log('prazno polje');
-      const message = "UNESENO JE PRAZNO POLJE";
-      setEmptyValue(message);
-
+    else 
+    {
+    emptyField()      
     }
 
   }
 
   console.log("userlist od svega:", userlist);
   console.log("just names:", justNamesList);
-
-
   
 
   return (   
