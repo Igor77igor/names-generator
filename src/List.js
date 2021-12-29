@@ -1,29 +1,28 @@
 
 import { DragDropContext,Droppable,Draggable } from "react-beautiful-dnd";
-import { useState } from 'react';
 
 
 const List = (props) => {
 
-    const names = props.userlist;
+    const names = props.userlist;    
+    const setNames = props.setUserlist;
     const doubleName1 = props.doubleName;
     const emptyValue1 = props.emptyValue;
 
-    const [people, updatePeople] = useState(names);
 
     function handleOnDragEnd(result) {
                 if (!result.destination) return;
                 console.log(result);
-                const items = Array.from(people);
+                const items = Array.from(names);
                 const [reorderedItem] = items.splice(result.source.index, 1);
                 items.splice(result.destination.index, 0, reorderedItem);
-                updatePeople(items);      
+                setNames(items);      
                 }
 
     return (
 
         <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="people">
+            <Droppable droppableId="names">
                 {(provided) => (
                     <ul className="list-group names mx-auto " 
                     {...provided.droppableProps} ref={provided.innerRef}>   
@@ -31,20 +30,20 @@ const List = (props) => {
                         {names.map(({ id, value }, index) => {
                         return (                             
 
-                                    <div className="collection-names" >  
-                                    <Draggable key={id} draggableId={id} index={index} >
-                                        {(provided) => (                                               
-                                            <li  className="list-group-item d-flex justify-content-between align-items-center my-1" 
-                                            {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                    <div key={id} className="collection-names" >  
+                                        <Draggable key={id} draggableId={id} index={index} >
+                                            {(provided) => (                                               
+                                                <li  className="list-group-item d-flex justify-content-between align-items-center my-1" 
+                                                {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
 
-                                                <span>
-                                                    {value}
-                                                </span>
-                                                <i className="far fa-smile head">
-                                                </i>
-                                            </li>    
-                                        )}
-                                    </Draggable>                                                                                
+                                                    <span>
+                                                        {value}
+                                                    </span>
+                                                    <i className="far fa-smile head">
+                                                    </i>
+                                                </li>    
+                                            )}
+                                        </Draggable>                                                                                
                                                                         
                                     </div>
                                 )

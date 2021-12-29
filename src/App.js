@@ -1,4 +1,3 @@
-import './App.css';
 import Button from './Button'
 import List from './List'
 import Input from './Input'
@@ -145,28 +144,11 @@ function App() {
   
 
   return (   
-     <div className="App">
-
-            <div className="container">
-
-                <header className="text-center text-light my-4">
-                <h1 className="mb-4">NAME GENERATOR</h1>
-
-                </header>
-
-                <Button handleClick={handleClick} isLoading={isLoading}></Button>
-
-                <List userlist={userlist} doubleName={doubleName} emptyValue={emptyValue}></List>
-
-                <Input handleChange={handleChange}    handleSubmit={handleSubmit}  inputName={inputName}></Input>
-
-                    
-
-            </div>
-
+     <div className="App">       
+        <Button handleClick={handleClick} isLoading={isLoading}></Button>
+        <List userlist={userlist} setUserlist={setUserlist} doubleName={doubleName} emptyValue={emptyValue}></List>
+        <Input handleChange={handleChange}    handleSubmit={handleSubmit}  inputName={inputName}></Input>
     </div >
-
-
   );
 }
 
