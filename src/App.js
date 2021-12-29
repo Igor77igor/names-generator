@@ -13,21 +13,14 @@ function App() {
   const [doubleName, setDoubleName] = useState("");
   const [emptyValue, setEmptyValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const [justNamesList, setJustNamesList] = useState([]);
+  
+  const justNames = userlist.map(user => user.value)
 
 
   const putNameToUserlist=(nameForList)=>
     {
       setUserlist([...userlist, nameForList]);
     }
-
-
-  const putNameToNameslist=(justNameForList)=>
-    {
-      setJustNamesList([...justNamesList, justNameForList.toUpperCase()]);
-    }
-
 
   const searchDoubleName=()=>
     {
@@ -53,32 +46,29 @@ function App() {
       })
       .then(data => {
 
-        let ime = data.results;
+        let names = data.results;
+        console.log(data.results)
         setIsLoading(false);
 
-        ime.forEach(ime => {
-          let mojeIme = ime.name.first.toUpperCase();
-          console.log('first name je:', mojeIme);
-
-          putNameToNameslist(mojeIme); 
+        names.forEach(name => {
+          let value = name.name.first.toUpperCase();
+          console.log('first name je:', value);
           
-          let id1 = ime.cell;
-          console.log('id je:', id1);
+          let id = name.cell;
+          console.log('id je:', id);
 
-
-          if (justNamesList.includes(mojeIme.toUpperCase())) 
+          if (justNames.includes(value)) 
           {
-          searchDoubleName();  
+            searchDoubleName();  
           }
 
           else 
           {
 
-            let person =
+            const person =
             {
-              id: id1,
-
-              value: mojeIme.toUpperCase()
+              id,
+              value
             };
 
             putNameToUserlist(person); 
@@ -109,7 +99,7 @@ function App() {
       {
         console.log("input name postoji");
         
-        if (justNamesList.includes(inputName.toUpperCase())) 
+        if (justNames.includes(inputName.toUpperCase())) 
           {
           searchDoubleName();          
           }
@@ -118,13 +108,12 @@ function App() {
           {
             console.log('e target value od handlesubmita je:', inputName);
 
-            let person2 =
+            const person2 =
               {
               id: (Math.floor(Math.random() * 1000)).toString(),
               value: inputName.toUpperCase()
               };
 
-            putNameToNameslist(inputName); 
             putNameToUserlist(person2);             
           }
 
@@ -139,9 +128,7 @@ function App() {
 
   }
 
-  console.log("userlist od svega:", userlist);
-  console.log("just names:", justNamesList);
-  
+  console.log("userlist od svega:", userlist);  
 
   return (   
      <div className="App">       
