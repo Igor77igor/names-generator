@@ -6,13 +6,13 @@ const List = (props) => {
 
     const names = props.userlist;    
     const setNames = props.setUserlist;
-    const doubleName1 = props.doubleName;
-    const emptyValue1 = props.emptyValue;
-
+    const doubleNameMessage = props.doubleName;
+    const emptyValueMessage = props.emptyValue;
+    const deleteName=props.deleteName;
+    
 
     function handleOnDragEnd(result) {
-                if (!result.destination) return;
-                console.log(result);
+                if (!result.destination) return;                
                 const items = Array.from(names);
                 const [reorderedItem] = items.splice(result.source.index, 1);
                 items.splice(result.destination.index, 0, reorderedItem);
@@ -20,46 +20,50 @@ const List = (props) => {
                 }
 
     return (
+        <div>
+        
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="names">
+                    {(provided) => (
+                        <ul className="list-group names mx-auto " 
+                        {...provided.droppableProps} ref={provided.innerRef}>   
 
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="names">
-                {(provided) => (
-                    <ul className="list-group names mx-auto " 
-                    {...provided.droppableProps} ref={provided.innerRef}>   
+                            {names.map(({ id, value }, index) => {
+                            return (                             
 
-                        {names.map(({ id, value }, index) => {
-                        return (                             
+                                        <div key={id} className="collection-names" >  
+                                            <Draggable key={id} draggableId={id} index={index} >
+                                                {(provided) => (                                               
+                                                    <li  className="list-group-item d-flex justify-content-between align-items-center  my-1 " 
+                                                    ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps} >
 
-                                    <div key={id} className="collection-names" >  
-                                        <Draggable key={id} draggableId={id} index={index} >
-                                            {(provided) => (                                               
-                                                <li  className="list-group-item d-flex justify-content-between align-items-center my-1" 
-                                                {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                                        <span>
+                                                            {value}                                                                                                              
+                                                        </span>
+                                                         
+                                                        <i onClick={()=>{deleteName(id)}} className="far fa-trash-alt delete">
+                                                        </i> 
+                                                                                                    
+                                                    </li>    
+                                                )}
+                                            </Draggable>     
+                                                                                                                    
+                                                                            
+                                        </div>
+                                    )
+                                })
+                            }                                                               
+                                        
+                            {provided.placeholder}  
+                        </ul>                    
+                    )}
+                </Droppable>
+            </DragDropContext>    
+            
+            <h3 className="mb-4 fst-italic">{doubleNameMessage}</h3>
+            <h3 className="mb-4 fst-italic">{emptyValueMessage}</h3> 
 
-                                                    <span>
-                                                        {value}
-                                                    </span>
-                                                    <i className="far fa-smile head">
-                                                    </i>
-                                                </li>    
-                                            )}
-                                        </Draggable>                                                                                
-                                                                        
-                                    </div>
-                                )
-                        })
-                        }
-
-                        <h3 className="mb-4">{doubleName1}</h3>
-                        <h3 className="mb-4">{emptyValue1}</h3>
-
-                        {provided.placeholder} 
-
-                    </ul>
-                )}
-            </Droppable>
-        </DragDropContext>
-     
+         </div>         
 
     );
 }
@@ -68,82 +72,3 @@ export default List;
 
  
         
-
-
-// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-// import { useState } from 'react';
-
-// const List = (props) => {
-
-//     const names = props.userlist;
-//     const doubleName1 = props.doubleName;
-//     const emptyValue1 = props.emptyValue;
-
-
-
-//     const [characters, updateCharacters] = useState(names);
-
-
-
-//     function handleOnDragEnd(result) {
-//         // if (!result.destination) return;
-//         console.log(result);
-//         const items = Array.from(characters);
-//         const [reorderedItem] = items.splice(result.source.index, 1);
-//         items.splice(result.destination.index, 0, reorderedItem);
-//         updateCharacters(items);
-
-
-//     }
-
-
-//     return (
-
-//         <DragDropContext onDragEnd={handleOnDragEnd}>
-//             <Droppable droppableId="characters">
-//                 {(provided) => (
-
-//                     <ul className="list-group names mx-auto " {...provided.droppableProps} ref={provided.innerRef}>
-
-//                         {names.map(({ id, value }, index) => {
-//                             return (
-
-//                                 <div className="collection-names">
-
-//                                     <Draggable key={id} draggableId={id} index={index} >
-//                                         {(provided) => (
-//                                             <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-//                                                 className="list-group-item d-flex justify-content-between align-items-center my-1">
-//                                                 <span>{value}  </span>
-//                                                 <i className="far fa-smile head"></i>
-//                                             </li>
-//                                         )}
-
-//                                     </Draggable>
-
-//                                 </div>
-//                             )
-//                         })
-//                         }
-
-
-//                         <h3 className="mb-4">{doubleName1}</h3>
-//                         <h3 className="mb-4">{emptyValue1}</h3>
-
-//                         {provided.placeholder}
-//                     </ul >
-//                 )}
-//             </Droppable>
-
-//         </DragDropContext>
-
-
-
-
-
-
-//     );
-// }
-
-// export default List;
-

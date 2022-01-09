@@ -4,7 +4,7 @@ const Button = ({ handleClick, isLoading }) => {
       <button onClick={handleClick} className="btn btn-primary my-3 ">
         Get name from site
       </button>
-      {isLoading && <div> LOADING...</div>}
+      {isLoading && <h4> LOADING...</h4>}
     </div>
   );
 };

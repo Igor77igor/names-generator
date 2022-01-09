@@ -7,8 +7,7 @@ function App() {
   
 
   const [userlist, setUserlist] = useState([]);
-
-  const [inputName, setInputName] = useState("");
+  const [inputName, setInputName] = useState("");  
 
   const [doubleName, setDoubleName] = useState("");
   const [emptyValue, setEmptyValue] = useState("");
@@ -24,39 +23,33 @@ function App() {
 
   const searchDoubleName=()=>
     {
-      console.log("ime vec postoji");
-      const doubleMessage = "IME VEC POSTOJI, UNIJETI NOVO IME";
+      const doubleMessage = "NAME ALREADY EXIST, ENTER NEW NAME";
       setDoubleName(doubleMessage);
     }
 
   const emptyField=()=>
     {
-    console.log('prazno polje');
-      const message = "UNESENO JE PRAZNO POLJE";
-      setEmptyValue(message);
+    setDoubleName('');    
+    const message = "EMPTY FIELD ENTERED";
+    setEmptyValue(message);
     }
     
   
   const handleClick = () => {
-    console.log("botun kliknut");  
-
+    
     fetch('https://randomuser.me/api')
       .then(res => {
         return res.json();
       })
       .then(data => {
 
-        let names = data.results;
-        console.log(data.results)
+        const bottunUser = data.results;
         setIsLoading(false);
 
-        names.forEach(name => {
-          let value = name.name.first.toUpperCase();
-          console.log('first name je:', value);
+        bottunUser.forEach(user => {
+          const value = user.name.first.toUpperCase();                    
+          const id = user.cell;
           
-          let id = name.cell;
-          console.log('id je:', id);
-
           if (justNames.includes(value)) 
           {
             searchDoubleName();  
@@ -64,15 +57,12 @@ function App() {
 
           else 
           {
-
-            const person =
+            const buttonPerson =
             {
               id,
-              value
+              value                            
             };
-
-            putNameToUserlist(person); 
-
+            putNameToUserlist(buttonPerson); 
           }
 
         });
@@ -85,7 +75,6 @@ function App() {
 
   const handleChange = (e) => 
   {
-    console.log('utipkano'); 
     setInputName(e.target.value);   
     setDoubleName('');
     setEmptyValue('');
@@ -97,8 +86,7 @@ function App() {
 
     if (inputName) 
       {
-        console.log("input name postoji");
-        
+             
         if (justNames.includes(inputName.toUpperCase())) 
           {
           searchDoubleName();          
@@ -106,15 +94,13 @@ function App() {
 
           else
           {
-            console.log('e target value od handlesubmita je:', inputName);
-
-            const person2 =
+            const inputPerson =
               {
               id: (Math.floor(Math.random() * 1000)).toString(),
               value: inputName.toUpperCase()
               };
 
-            putNameToUserlist(person2);             
+            putNameToUserlist(inputPerson);             
           }
 
           setInputName('');
@@ -128,13 +114,20 @@ function App() {
 
   }
 
-  console.log("userlist od svega:", userlist);  
+  const deleteName = (id)=>{
+    const filteredUserlist = userlist.filter(user=>
+      {
+        return user.id!==id
+      })
+
+    setUserlist(filteredUserlist);
+  }  
 
   return (   
      <div className="App">       
         <Button handleClick={handleClick} isLoading={isLoading}></Button>
-        <List userlist={userlist} setUserlist={setUserlist} doubleName={doubleName} emptyValue={emptyValue}></List>
-        <Input handleChange={handleChange}    handleSubmit={handleSubmit}  inputName={inputName}></Input>
+        <List deleteName={deleteName} userlist={userlist} setUserlist={setUserlist} doubleName={doubleName} emptyValue={emptyValue}></List>
+        <Input handleChange={handleChange} handleSubmit={handleSubmit} inputName={inputName}></Input>        
     </div >
   );
 }

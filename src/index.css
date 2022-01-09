@@ -4,34 +4,44 @@ body{
 
 .App{
   text-align: center;
-  padding: 30px 100px;
+  padding: 30px 200px;
+  max-width: 700px; 
+  margin: 0px auto;  
+  
 }
 
 .names li{
   background: #3d67a5;
-  color:whitesmoke;
+  color:whitesmoke;  
+  
+  
 }
 
-.container{
-  max-width: 400px;
-}
-
-.head{
-  cursor: pointer;
-}
-
-.filtered{
-  display: none !important;
-}
-
-.message{
-  color:red;
+.button h4 {
   font-style: italic;
-  display:none;
+  color:rgb(48, 55, 150);
+  
+}
+
+
+.delete{
+  cursor: pointer;
+  font-size:large;
+   
+        
+}
+
+
+.number i{
+  left: 150px; 
+  font-size:xx-large;
+  color: blue;
+}
+
+
+.names h3{
+  color:crimson;
+  font-style: italic;
   max-width: 300px;
 }
 
-.lista-imena li{
-  background: #3d67a5;
-  color:whitesmoke;
-}
